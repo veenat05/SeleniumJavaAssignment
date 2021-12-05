@@ -13,11 +13,9 @@ public class CouponPage {
 	By international = By.id("international");
 	
 	//locator of coupon stores
-	By couponStores = By.xpath("//div[@class=\"rY\"]/a");
+	By couponStores = By.xpath("//div[@class='rY']/p/a");
 	
-	
-	
-	
+
 	public By getCouponStores() {
 		return couponStores;
 	}

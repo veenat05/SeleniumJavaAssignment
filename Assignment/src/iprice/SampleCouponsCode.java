@@ -1,8 +1,11 @@
 package iprice;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.AssertJUnit.assertTrue;
 
 import java.util.List;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -21,10 +24,24 @@ public class SampleCouponsCode {
 	 //getting the list of stores under Coupon Stores
 	 List<WebElement> couponStoreList = driver.findElements(coupon.getCouponStores());
 	 System.out.println("Count of list of stores under Coupon Stores =  "+couponStoreList.size());
- 	 for(int i = 0; i<couponStoreList.size() ; i++){
-  		assertTrue(couponStoreList.get(i).isEnabled());
-  		
-      }
+	    String[] linksText = new String [couponStoreList.size()];
+	    String[] link = new String [couponStoreList.size()];
+	    int i=0;
+	    for(WebElement a: couponStoreList)
+	    {
+	        linksText[i]=a.getText();
+	        link[i]=a.getAttribute("href");
+	        i++;
+	    }
+	    for(int j=0;j<linksText.length;j++)
+	    {
+            By linkTextLocator = By.linkText(linksText[j]);
+            driver.findElement((linkTextLocator)).click();
+            if(driver.getCurrentUrl() == link[j]) {
+            	assertTrue("Both Urls are the same",true);
+            }
+	        driver.navigate().back();
+        }
  	 driver.quit();
 	}
 }
